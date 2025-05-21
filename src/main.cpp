@@ -1,10 +1,10 @@
 #include <Arduino.h>
 #include <Servo.h>
 
-const int SERVOS = 3;
-const int POT_PINS[SERVOS] = {0, 1, 2};
-const int SERVO_PINS[SERVOS] = {6, 5, 3};
-Servo servos[SERVOS];
+const int N_SERVOS = 3;
+const int POT_PINS[N_SERVOS] = {0, 1, 2};
+const int SERVO_PINS[N_SERVOS] = {6, 5, 3};
+Servo servos[N_SERVOS];
 
 const int WIN_PIN = 12;
 const int FINISH_PIN = 13;
@@ -12,7 +12,7 @@ bool has_won = false;
 
 void setup() {
     Serial.begin(9600);
-    for (int i = 0; i < SERVOS; ++i) {
+    for (int i = 0; i < N_SERVOS; ++i) {
         servos[i].attach(SERVO_PINS[i]);
     }
     pinMode(WIN_PIN, INPUT);
@@ -20,7 +20,7 @@ void setup() {
 }
 
 void loop() {
-    for (int i = 0; i < SERVOS; i++) {
+    for (int i = 0; i < N_SERVOS; i++) {
         int val = analogRead(POT_PINS[i]);
         val = map(val, 0, 1023, 0, 180);
         servos[i].write(val);
