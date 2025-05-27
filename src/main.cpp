@@ -12,6 +12,7 @@ const int WIN_PIN = A3;
 const int IN_PIN = 12;
 const int OUT_PIN = 13;
 const int DELAY = 5;
+bool running = false;
 
 void setup() {
     Serial.begin(9600);
@@ -25,9 +26,10 @@ void setup() {
 }
 
 void loop() {
-    while (digitalRead(IN_PIN) == LOW) {
-        delay(DELAY);
+    while (digitalRead(IN_PIN) == LOW && !running) {
+        delay(5);
     }
+    running = true;
     for (int i = 0; i < N_SERVOS; i++) {
         int val = analogRead(POT_PINS[i]);
         val = map(val, 0, 1023, 0, 180);
@@ -39,6 +41,7 @@ void loop() {
         delay(3000);  // Sleeps for 3 secs
         digitalWrite(OUT_PIN, LOW);
         reset();
+        running = false;
     }
     delay(DELAY);
 }
