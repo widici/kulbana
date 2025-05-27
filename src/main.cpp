@@ -23,11 +23,12 @@ void setup() {
     pinMode(WIN_PIN, INPUT);
     pinMode(IN_PIN, INPUT);
     pinMode(OUT_PIN, OUTPUT);
+    digitalWrite(OUT_PIN, HIGH);
 }
 
 void loop() {
     while (digitalRead(IN_PIN) == LOW && !running) {
-        delay(5);
+        delay(DELAY);
     }
     running = true;
     for (int i = 0; i < N_SERVOS; i++) {
@@ -37,9 +38,9 @@ void loop() {
     }
     if (analogRead(WIN_PIN) <= LIGHT_THRESHOLD) {
         Serial.println("WON");
-        digitalWrite(OUT_PIN, HIGH);
-        delay(3000);  // Sleeps for 3 secs
         digitalWrite(OUT_PIN, LOW);
+        delay(3000);  // Sleeps for 3 secs
+        digitalWrite(OUT_PIN, HIGH);
         reset();
         running = false;
     }
